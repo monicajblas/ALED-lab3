@@ -1,5 +1,6 @@
 package es.upm.dit.aled.lab3.binary;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -78,10 +79,65 @@ public class FASTAReaderSuffixes extends FASTAReader {
 	 */
 	@Override
 	public List<Integer> search(byte[] pattern) {
-		// TODO
-		return null;
+		List<Integer> resultados = new ArrayList<Integer>(); 
+		int lo = 0; 
+		int hi = this.suffixes.length; 
+		boolean found = false;
+		int index = 0;  
+		
+		while(found == false && hi-lo >1) {
+			int m = (hi+lo)/2;
+			int posSuffix = this.suffixes[m].suffixIndex; 
+			
+			while(posSuffix+index<content.length && index<pattern.length //para q compare solo las palabras del pattern 
+					&& pattern[index] == content[posSuffix + index]) {   //cuando la letra del patrón coincida con la letra de la posición en la que estoy se incrementa index
+			    index++;                                        	     //si coindide index con pattern significa q ya tegno la "palabra"
+			    if(index == pattern.length) {      //cuando el nº del índice es igual al tamaño del patrón entonces tengo mi palabra 
+			    	resultados.add(posSuffix);
+			    	found = true; 
+			   
+			  //no se tienen en cuenta coincidencias, es decir, cuando se encuentra la palabra 
+			  //se sale y solo da la posición de esa palabra, PERO HAY MÁS PALABRAS IGUALES EN OTRAS POSICIONES 
+		      //tenemos q recorrer hacia arriba y/o hacia abajo d esta palabra para sacar el resto
+			  //recorreremos el array de sufijos 
+			   
+			    //RECORRO PARA ARTÁS
+			    	int i = 1;
+			    	do {
+			    		index = 0;
+			    		posSuffix = this.suffixes[m-1].suffixIndex; //actualizo donde voy a caer
+			    		while(posSuffix+index<content.length && index<pattern.length //para q compare solo las palabras del pattern 
+								&& pattern[index] == content[posSuffix + index])
+			    			index++;
+			    		if(index==pattern.length) //si ha ahbido coincidencia absoluta la añado
+			    			resultados.add(posSuffix);
+			    		i++;
+			    	} while(index==pattern.length);  //si sigue habiendo coincidencia, vuelvo para atrás 
+					
+			    //RECORRO PARA ADELANTE
+					i = 1;
+					do {
+						index = 0;
+						posSuffix = this.suffixes[m+1].suffixIndex; //actualizo donde voy a caer
+						while(posSuffix+index<content.length && index<pattern.length //para q compare solo las palabras del pattern 
+								&& pattern[index] == content[posSuffix + index])
+								index++;
+						if(index==pattern.length) //si ha ahbido coincidencia absoluta la añado
+							resultados.add(posSuffix);
+						i++;
+					} while(index==pattern.length); //si sigue habiendo coincidencia, vuelvo para atrás 
+			    }	
+				else {	
+			    	if(pattern[index]<content[posSuffix + index]) 
+			    		hi=m--; 
+			    	else
+			    		lo=m++; 
+			    	index = 0; 	
+			    }
+			}
+		}
+		return resultados; 
 	}
-
 	public static void main(String[] args) {
 		long t1 = System.nanoTime();
 		FASTAReaderSuffixes reader = new FASTAReaderSuffixes(args[0]);
