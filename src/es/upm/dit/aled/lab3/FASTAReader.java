@@ -20,8 +20,8 @@ import java.util.List;
  */
 public class FASTAReader {
 
-	protected byte[] content;
-	protected int validBytes;
+	protected byte[] content; //nuestro genoma 
+	protected int validBytes; //indica cuántos de los bytes de content son válidos
 
 	/**
 	 * Creates a new FASTAReader from a FASTA file.
