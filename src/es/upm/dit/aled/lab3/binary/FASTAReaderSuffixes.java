@@ -89,10 +89,10 @@ public class FASTAReaderSuffixes extends FASTAReader {
 			int m = (hi+lo)/2;
 			int posSuffix = this.suffixes[m].suffixIndex; 
 			
-			while(posSuffix+index<content.length && index<pattern.length //para q compare solo las palabras del pattern 
-					&& pattern[index] == content[posSuffix + index]) {   //cuando la letra del patrón coincida con la letra de la posición en la que estoy se incrementa index
-			    index++;                                        	     //si coindide index con pattern significa q ya tegno la "palabra"
-			    if(index == pattern.length) {      //cuando el nº del índice es igual al tamaño del patrón entonces tengo mi palabra 
+			while(posSuffix+index<content.length && index<pattern.length    //para q compare solo las palabras del pattern 
+					&& pattern[index] == content[posSuffix + index]) {      //cuando la letra del patrón coincida con la letra de la posición en la que estoy se incrementa index
+			    index++;                                        	        //si coindide index con pattern significa q ya tegno la "palabra"
+			    if(index == pattern.length) {                               //cuando el nº del índice es igual al tamaño del patrón entonces tengo mi palabra 
 			    	resultados.add(posSuffix);
 			    	found = true; 
 			   
