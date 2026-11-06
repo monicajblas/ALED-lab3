@@ -101,28 +101,28 @@ public class FASTAReaderSuffixes extends FASTAReader {
 		      //tenemos q recorrer hacia arriba y/o hacia abajo d esta palabra para sacar el resto
 			  //recorreremos el array de sufijos 
 			   
-			    //RECORRO PARA ARTÁS
+			  //RECORRO PARA ARTÁS
 			    	int i = 1;
 			    	do {
 			    		index = 0;
-			    		posSuffix = this.suffixes[m-1].suffixIndex; //actualizo donde voy a caer
+			    		posSuffix = this.suffixes[m-1].suffixIndex;                  //actualizo donde voy a caer
 			    		while(posSuffix+index<content.length && index<pattern.length //para q compare solo las palabras del pattern 
 								&& pattern[index] == content[posSuffix + index])
 			    			index++;
-			    		if(index==pattern.length) //si ha ahbido coincidencia absoluta la añado
+			    		if(index==pattern.length)        //si ha ahbido coincidencia absoluta la añado
 			    			resultados.add(posSuffix);
 			    		i++;
-			    	} while(index==pattern.length);  //si sigue habiendo coincidencia, vuelvo para atrás 
+			    	} while(index==pattern.length);      //si sigue habiendo coincidencia, vuelvo para atrás 
 					
 			    //RECORRO PARA ADELANTE
 					i = 1;
 					do {
 						index = 0;
-						posSuffix = this.suffixes[m+1].suffixIndex; //actualizo donde voy a caer
-						while(posSuffix+index<content.length && index<pattern.length //para q compare solo las palabras del pattern 
+						posSuffix = this.suffixes[m+1].suffixIndex;                   //actualizo donde voy a caer
+						while(posSuffix+index<content.length && index<pattern.length  //para q compare solo las palabras del pattern 
 								&& pattern[index] == content[posSuffix + index])
 								index++;
-						if(index==pattern.length) //si ha ahbido coincidencia absoluta la añado
+						if(index==pattern.length)                                     //si ha ahbido coincidencia absoluta la añado
 							resultados.add(posSuffix);
 						i++;
 					} while(index==pattern.length); //si sigue habiendo coincidencia, vuelvo para atrás 
